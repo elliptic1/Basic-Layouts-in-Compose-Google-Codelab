@@ -42,6 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tbse.basiclayoutsincompose.ui.theme.MySootheTheme
 import androidx.compose.foundation.lazy.items
+import java.util.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -178,9 +179,20 @@ fun FavoriteCollectionsGrid(
 // Step: Home section - Slot APIs
 @Composable
 fun HomeSection(
-    modifier: Modifier = Modifier
+    @StringRes title: Int,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
 ) {
-    // Implement composable here
+    Column(modifier) {
+        Text(
+            text = stringResource(title).uppercase(Locale.getDefault()),
+            style = MaterialTheme.typography.h6,
+            modifier = Modifier
+                .paddingFromBaseline(top = 35.dp, bottom = 16.dp)
+                .padding(horizontal = 16.dp)
+        )
+        content()
+    }
 }
 
 // Step: Home screen - Scrolling
@@ -269,9 +281,12 @@ fun AlignYourBodyRowPreview() {
 @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
 @Composable
 fun HomeSectionPreview() {
-    MySootheTheme { HomeSection() }
+    MySootheTheme {
+        HomeSection(R.string.align_your_body) {
+            AlignYourBodyRow()
+        }
+    }
 }
-
 @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
 @Composable
 fun ScreenContentPreview() {
